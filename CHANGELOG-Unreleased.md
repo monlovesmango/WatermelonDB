@@ -57,3 +57,5 @@ Changes unlikely to cause issues:
 ### Changes
 
 ### Internal
+
+- New example added for React Native v0.72 and WatermelonDB v0.27.0
