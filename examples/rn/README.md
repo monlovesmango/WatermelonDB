@@ -7,9 +7,9 @@ till "Creating a new application" step, before proceeding.
 >**Note**: In a real project, make sure you have completed the [WatermelonDB - Installation](https://watermelondb.dev/docs/Installation) 
 instructions. For this example, these steps have already been completed.
 
-## Step 1: Install NPM dependencies
+## Step 1: Install dependencies
 
-Install the NPM dependencies
+Install NPM dependencies
 
 ```bash
 # using npm
@@ -19,6 +19,13 @@ npm install
 yarn
 ```
 
+### For IOS
+
+Install IOS native dependencies
+
+```bash
+cd ios && pod install && cd ..
+```
 ## Step 2: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.

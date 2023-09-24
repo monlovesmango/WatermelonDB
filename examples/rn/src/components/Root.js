@@ -12,6 +12,7 @@ import { database } from '../../index';
 class Root extends Component {
   state = {
     isGenerating: false,
+    isDeleting: false,
     search: '',
     isSearchFocused: false,
   };
@@ -29,6 +30,17 @@ class Root extends Component {
 
   generate10k = () => this.generateWith(generate10k);
 
+
+  deleteAll = async () => {
+    this.setState({ isDeleting: true });
+
+    await database.write(async () => {
+      await database.unsafeResetDatabase();
+    })
+
+    this.setState({ isDeleting: false });
+  };
+
   handleTextChanges = (v) => this.setState({ search: v });
 
   handleOnFocus = () => this.setState({ isSearchFocused: true });
@@ -36,7 +48,7 @@ class Root extends Component {
   handleOnBlur = () => this.setState({ isSearchFocused: false });
 
   render() {
-    const { search, isGenerating, isSearchFocused } = this.state;
+    const { search, isGenerating, isDeleting, isSearchFocused } = this.state;
     const { navigation } = this.props;
 
     return (
@@ -51,6 +63,9 @@ class Root extends Component {
                   <Button title="100 records" onPress={this.generate100} />
                   <Button title="10,000 records" onPress={this.generate10k} />
                 </View>
+                <View style={styles.buttonContainer}>
+                  <Button title="delete all records" onPress={this.deleteAll} />
+                </View>
               </View>
             </Fragment>
           )}
@@ -62,7 +77,7 @@ class Root extends Component {
             onBlur={this.handleOnBlur}
             onChangeText={this.handleTextChanges}
           />
-          {!isGenerating && (
+          {!(isGenerating || isDeleting) && (
             <BlogList database={database} search={search} navigation={navigation} />
           )}
         </SafeAreaView>
